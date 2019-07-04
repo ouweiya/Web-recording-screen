@@ -2,4 +2,3 @@
 
 预览地址: [https://ouweiya.github.io](https://ouweiya.github.io)
 
-https://ouweiya.github.io
