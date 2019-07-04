@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Document</title>
+    <style>
+      video {
+        display: block;
+      }
+    </style>
+  </head>
+  <body>
+    <button id="start">Start</button>
+    <button id="stop">Stop</button>
+  </body>
+</html>
+
+<script>
+  const $ = document.querySelector.bind(document);
+
+  const handler = stream => {
+    const mediaRecorder = new MediaRecorder(stream);
+    let chunks = [];
+    mediaRecorder.start();
+
+    const v1 = document.createElement('video');
+    v1.srcObject = stream;
+    v1.autoplay = true;
+    v1.width = 800;
+    document.body.append(v1);
+
+    $('#stop').onclick = () => mediaRecorder.stop();
+    mediaRecorder.onstop = e => {
+      const v = document.createElement('video');
+      const a = document.createElement('a');
+      a.innerHTML = 'Download';
+      a.download = 'aaa';
+      v.setAttribute('controls', true);
+      v.setAttribute('width', 300);
+      console.log(chunks);
+      const blob = new Blob(chunks, { type: 'video/mp4' });
+      chunks = [];
+      const url = window.URL.createObjectURL(blob);
+      v.src = url;
+
+      a.href = url;
+      document.body.append(v);
+      document.body.append(a);
+
+      stream.getTracks().forEach(track => track.stop());
+      v1.remove();
+      window.URL.revokeObjectURL(url);
+    };
+
+    mediaRecorder.ondataavailable = function(e) {
+      chunks.push(e.data);
+      console.log('ondataavailable:', e.data);
+    };
+  };
+
+  // const start = () => navigator.mediaDevices.getDisplayMedia({ video: true, audio: true }).then(handler);
+  const start = async () => {
+    const liu = await navigator.mediaDevices.getDisplayMedia({ video: true, audio: true });
+    console.log(liu);
+  };
+
+  $('#start').onclick = start;
+</script>
+
+<script>
+  const fun = n => {
+    if (n === 0) {
+      let a = n;
+      return a;
+    }
+    return fun(n - 1);
+  };
+
+  // console.log(fun(100000));
+</script>

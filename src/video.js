@@ -10,8 +10,6 @@ import CloseIcon from '@material-ui/icons/Close';
 
 import Typography from '@material-ui/core/Typography';
 
-import v1 from './a.mp4';
-
 const styles = theme => ({
   root: {
     margin: 0,
@@ -44,7 +42,8 @@ const useStyles = makeStyles(theme => ({
     padding: theme.spacing(1)
   },
   video: {
-    maxWidth: '100%'
+    width: '100%',
+    height: 'auto'
   }
 }));
 
@@ -54,14 +53,13 @@ const Video = ({ setname, ...props }) => {
     const src = v.current.src;
     const i = src.lastIndexOf('/');
     const name = src.substr(i + 1);
-    console.log(name);
     setname(name);
   });
   return <video {...props} ref={v} />;
 };
 
 const CustomizedDialogs = props => {
-  const { open, setOpen } = props;
+  const { open, setOpen, src } = props;
   const [name, setname] = useState('a');
   const classes = useStyles();
   const v = useRef(null);
@@ -76,7 +74,7 @@ const CustomizedDialogs = props => {
 
       <MuiDialogContent dividers className={classes.root}>
         <Typography>
-          <Video src={v1} controls className={classes.video} setname={setname} autoPlay />
+          <Video src={src} controls className={classes.video} setname={setname} autoPlay />
         </Typography>
       </MuiDialogContent>
     </Dialog>
