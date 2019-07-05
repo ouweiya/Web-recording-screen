@@ -2,5 +2,4 @@
 
 预览地址: [https://ouweiya.github.io](https://ouweiya.github.io)
 
-![a.png](http://www.htdzzk.com.cn/upload_files/tk14691846.jpg)
-
+![a.png](https://github.com/ouweiya/Web-recording-screen/blob/master/a.png)
