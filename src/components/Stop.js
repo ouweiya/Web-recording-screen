@@ -1,11 +1,5 @@
 import React from 'react';
 import Button from '@material-ui/core/Button';
-import { connect } from 'react-redux';
-import { stop } from '../reducers';
-
-/* const mapStateToProps = state => {
-  return { ...state };
-}; */
 
 const Stop = props => {
   return (
@@ -16,8 +10,3 @@ const Stop = props => {
 };
 
 export default Stop;
-
-// export default connect(
-//   mapStateToProps,
-//   { stop }
-// )(Stop);

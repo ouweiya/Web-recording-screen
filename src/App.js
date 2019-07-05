@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React, { useRef, useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import Container from '@material-ui/core/Container';
 import { makeStyles } from '@material-ui/core/styles';
@@ -21,13 +21,19 @@ const App = props => {
   const classes = useStyles();
   const ref = useRef(null);
   const { toggle, asystart, asystop, url } = props;
+  const [can, setCan] = useState(true);
+
+  useEffect(() => {
+    const ok = !!navigator.mediaDevices && !!navigator.mediaDevices.getDisplayMedia;
+    setCan(ok);
+  }, []);
 
   return (
     <>
       <Container maxWidth='md'>
         <Grid container spacing={1} className={classes.root}>
           <Grid item xs={4}>
-            <Start disabled={toggle} onClick={_ => asystart(ref)} />
+            <Start disabled={toggle} onClick={can ? _ => asystart(ref) : null} />
           </Grid>
           <Grid item xs={4}>
             <Stop onClick={_ => asystop(toggle)} />
@@ -44,7 +50,7 @@ const App = props => {
           </Grid>
 
           <Grid item xs={12}>
-            <Video ref={ref} autoPlay={toggle} controls={!toggle} />
+            <Video ref={ref} autoPlay={toggle} controls={!toggle} can={can} />
           </Grid>
         </Grid>
       </Container>

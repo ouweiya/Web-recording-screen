@@ -1,6 +1,8 @@
 import React from 'react';
 import Paper from '@material-ui/core/Paper';
+import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
+import { withStyles } from '@material-ui/core/styles';
 import Zhishi from './Zhishi';
 
 const useStyles = makeStyles(theme => ({
@@ -19,17 +21,36 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-export const Video = React.forwardRef((props, ref) => {
-  const classes = useStyles();
+const styles = theme => ({
+  root: {
+    marginTop: 90
+  }
+});
 
+const Support = withStyles(styles)(({ classes }) => {
+  return (
+    <Typography variant='h5' align='center' color='textSecondary' className={classes.root}>
+      浏览器不支持此功能
+    </Typography>
+  );
+});
+
+export const Video = React.forwardRef(({ can, ...props }, ref) => {
+  const classes = useStyles();
+  console.log(props, can);
   return (
     <Paper className={classes.paper} id='box'>
-      <video
-        className={classes.video}
-        ref={ref}
-        {...props}
-        style={{ display: props.autoPlay ? 'block' : 'none' }}
-      />
+      {can ? (
+        <video
+          className={classes.video}
+          ref={ref}
+          {...props}
+          style={{ display: props.autoPlay ? 'block' : 'none' }}
+        />
+      ) : (
+        <Support />
+      )}
+
       {props.autoPlay && <Zhishi />}
     </Paper>
   );
