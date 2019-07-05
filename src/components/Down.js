@@ -1,12 +1,12 @@
 import React from 'react';
 import Button from '@material-ui/core/Button';
 
-const Start = props => {
+const Down = props => {
   return (
     <Button variant='contained' color='primary' fullWidth {...props}>
-      开始
+      下载
     </Button>
   );
 };
 
-export default Start;
+export default Down;

@@ -1,9 +1,8 @@
 import { configureStore } from 'redux-starter-kit';
-import rootReducer from './reducers';
+import { reducer } from './reducers';
 
-// const reducer = {
-//   toggle: rootReducer
-// };
+const store = configureStore({
+  reducer
+});
 
-const store = configureStore({ reducer: rootReducer });
 export default store;

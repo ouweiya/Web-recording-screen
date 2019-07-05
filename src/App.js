@@ -1,11 +1,15 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useRef } from 'react';
+import { connect } from 'react-redux';
 import Container from '@material-ui/core/Container';
 import { makeStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
+import Link from '@material-ui/core/Link';
 
 import Start from './components/Start';
 import Stop from './components/Stop';
+import Down from './components/Down';
 import { Video } from './components/Content';
+import { asystart, asystop } from './reducers';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -13,52 +17,42 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-export default function App() {
+const App = props => {
   const classes = useStyles();
   const ref = useRef(null);
-  const [toggle, setToggle] = useState(false);
-  const [stream, setStream] = useState(null);
-
-  const start = () => {
-    (async () => {
-      const stream = await navigator.mediaDevices.getDisplayMedia({ video: true, audio: true });
-      setStream(stream);
-      ref.current.srcObject = stream;
-      setToggle(true);
-      stream.getVideoTracks()[0].onended = () => {
-        setToggle(false);
-      };
-    })();
-  };
-
-  const stop = () => {
-    console.log(stream);
-    stream && stream.getTracks().forEach(track => track.stop());
-    setToggle(false);
-  };
-
-  useEffect(() => {
-    console.log('useEffect');
-    // ref.current.autoplay = true;
-    // ref.current.controls = true;
-  });
+  const { toggle, asystart, asystop, url } = props;
 
   return (
     <>
       <Container maxWidth='md'>
         <Grid container spacing={1} className={classes.root}>
-          <Grid item xs={6}>
-            <Start onClick={start} disabled={toggle} />
+          <Grid item xs={4}>
+            <Start disabled={toggle} onClick={_ => asystart(ref)} />
           </Grid>
-          <Grid item xs={6}>
-            <Stop onClick={stop} />
+          <Grid item xs={4}>
+            <Stop onClick={_ => asystop(toggle)} />
+          </Grid>
+          <Grid item xs={4}>
+            <Link
+              href={url ? url : null}
+              download={url ? `${Date.now()}.mp4` : null}
+              color='inherit'
+              underline='none'
+            >
+              <Down disabled={!url} />
+            </Link>
           </Grid>
 
           <Grid item xs={12}>
-            <Video ref={ref} autoPlay />
+            <Video ref={ref} autoPlay={toggle} controls={!toggle} />
           </Grid>
         </Grid>
       </Container>
     </>
   );
-}
+};
+
+export default connect(
+  state => state,
+  { asystart, asystop }
+)(App);

@@ -11,8 +11,8 @@ const useStyles = makeStyles({
   },
   root: {
     position: 'absolute',
-    right: 10,
-    top: 10,
+    right: 20,
+    top: 20,
 
     boxSizing: 'border-box',
     width: '22px',
