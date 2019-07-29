@@ -1,5 +1,5 @@
-借助高级浏览器API, 实现的零安装屏幕录制功能.
+借助高级浏览器 API, 实现的零安装屏幕录制功能.
 
-预览地址: [https://ouweiya.github.io](https://ouweiya.github.io)
+预览地址: [Web-recording-screen](https://ouweiya.github.io/Web-recording-screen)
 
-![a.png](https://github.com/ouweiya/Web-recording-screen/blob/master/a.png)
+![a.png](img/a.png)
