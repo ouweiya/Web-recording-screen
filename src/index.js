@@ -1,7 +1,9 @@
 import 'react-app-polyfill/ie9';
 import 'react-app-polyfill/stable';
 import React from 'react';
-import ReactDOM from 'react-dom';
+// import ReactDOM from 'react-dom';
+// import { hydrate, render } from 'react-dom';
+import { render } from 'react-snapshot';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
 import { ThemeProvider } from '@material-ui/styles';
@@ -17,15 +19,37 @@ const theme = createMuiTheme({
   }
 });
 
-ReactDOM.render(
+render(
   <ThemeProvider theme={theme}>
     <CssBaseline />
     <Provider store={store}>
       <App />
     </Provider>
   </ThemeProvider>,
-
   document.getElementById('root')
 );
+// const rootElement = document.getElementById('root');
 
+// if (rootElement.hasChildNodes()) {
+//   hydrate(
+//     <ThemeProvider theme={theme}>
+//       <CssBaseline />
+//       <Provider store={store}>
+//         <App />
+//       </Provider>
+//     </ThemeProvider>,
+//     rootElement
+//   );
+// } else {
+//   render(
+//     <ThemeProvider theme={theme}>
+//       <CssBaseline />
+//       <Provider store={store}>
+//         <App />
+//       </Provider>
+//     </ThemeProvider>,
+//     rootElement
+//   );
+// }PUBLIC_URL=/aaa
+// "homepage": "https://github.com/ouweiya/ouweiya.github.io/Web-recording-screen",
 serviceWorker.unregister();
